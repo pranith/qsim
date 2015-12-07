@@ -1,0 +1,38 @@
+---
+ arch/arm64/include/asm/mmu_context.h | 2 +-
+ kernel/sched/core.c                  | 6 ++++++
+ 2 files changed, 7 insertions(+), 1 deletion(-)
+
+diff --git a/arch/arm64/include/asm/mmu_context.h b/arch/arm64/include/asm/mmu_context.h
+index 8ec41e5..ac22f01 100644
+--- a/arch/arm64/include/asm/mmu_context.h
++++ b/arch/arm64/include/asm/mmu_context.h
+@@ -42,7 +42,7 @@ static inline void contextidr_thread_switch(struct task_struct *next)
+ 	"	msr	contextidr_el1, %0\n"
+ 	"	isb"
+ 	:
+-	: "r" (task_pid_nr(next)));
++	: "r" (task_tgid_nr(next)));
+ }
+ #else
+ static inline void contextidr_thread_switch(struct task_struct *next)
+diff --git a/kernel/sched/core.c b/kernel/sched/core.c
+index 78b4bad10..465673a 100644
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -2558,6 +2558,12 @@ context_switch(struct rq *rq, struct task_struct *prev,
+ {
+ 	struct mm_struct *mm, *oldmm;
+ 
++	// tell qsim the pid of the next task or that it is idle
++	if (next == rq->idle)
++		asm("cpuid;\n"::"a"(0x1d1e1d1e));
++	else
++		asm("cpuid;\n"::"a"(0xc75c0000 | ((u16)(task_tgid_nr(next)))));
++
+ 	prepare_task_switch(rq, prev, next);
+ 
+ 	mm = next->mm;
+-- 
+2.6.2
+
