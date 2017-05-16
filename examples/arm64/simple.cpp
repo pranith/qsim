@@ -162,11 +162,12 @@ int main(int argc, char** argv) {
 
   tw.app_start_cb(0);
   // The main loop: run until 'finished' is true.
-  unsigned long inst_per_iter = 1000000000, inst_run;
+  unsigned long inst_per_iter = 1000, inst_run;
   inst_run = inst_per_iter;
-  while (!(inst_per_iter - inst_run)) {
+  while (!tw.hasFinished()) {
     inst_run = 0;
-    inst_run = osd.run(inst_per_iter);
+    for (int i = 0; i < n_cpus; i++)
+      inst_run += osd.run(i, inst_per_iter);
     osd.timer_interrupt();
   }
   
