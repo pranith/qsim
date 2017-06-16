@@ -76,7 +76,7 @@ debug: all
 release: all
 	./build-qemu.sh $@		
 
-tests: release install a64_tests
+tests: release install x86_tests a64_tests
 
 x86_prep:
 	if [ ! -e initrd/initrd.cpio.x86 ]; then \
