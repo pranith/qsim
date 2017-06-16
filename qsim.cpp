@@ -231,7 +231,7 @@ const char** get_qemu_args(const char* kernel, int ram_size, int n_cpus, const s
     "-nographic",
     "-redir", "tcp:2222::22",
     "-smp", ncpus,
-    //"-icount", "0,sleep=off",
+    "-icount", "1,sleep=off",
     "-rtc", "clock=vm",
     (mode == QSIM_KVM) ? "--enable-kvm" : NULL,
     NULL
@@ -251,7 +251,7 @@ const char** get_qemu_args(const char* kernel, int ram_size, int n_cpus, const s
     "-nographic",
     "-redir", "tcp:2223::22",
     "-smp", ncpus,
-    //"-icount", "0,sleep=off",
+    "-icount", "1,sleep=off",
     "-rtc", "clock=vm",
     (mode == QSIM_KVM) ? "--enable-kvm" : NULL,
     NULL
@@ -270,7 +270,7 @@ const char** get_qemu_args(const char* kernel, int ram_size, int n_cpus, const s
     " nowatchdog rcupdate.rcu_cpu_stall_suppress=1",
     "-nographic",
     "-smp", ncpus,
-    //"-icount", "0,sleep=off",
+    "-icount", "1,sleep=off",
     "-rtc", "clock=vm",
     (mode == QSIM_KVM) ? "--enable-kvm" : NULL,
     NULL
@@ -286,7 +286,7 @@ const char** get_qemu_args(const char* kernel, int ram_size, int n_cpus, const s
     " nowatchdog rcupdate.rcu_cpu_stall_suppress=1 console=/dev/ttyS0",
     "-nographic",
     "-smp", ncpus,
-    //"-icount", "0,sleep=off",
+    "-icount", "1,sleep=off",
     "-rtc", "clock=vm",
     (mode == QSIM_KVM) ? "--enable-kvm" : NULL,
     NULL
