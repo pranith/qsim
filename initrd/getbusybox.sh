@@ -12,7 +12,7 @@ if [ "$HOST" == "aarch64" ]; then
   CROSS=
 fi
 
-BBOX=busybox-1.26.2
+BBOX=busybox-1.28.2
 BBOX_ARCHIVE=$BBOX.tar.bz2
 BBOX_URL=https://www.busybox.net/downloads/$BBOX_ARCHIVE
 
