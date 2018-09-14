@@ -803,6 +803,10 @@ int Qsim::OSDomain::magic_cb(int cpu_id, uint64_t rax) {
     if (mode == QSIM_HEADLESS) {
       for (unsigned i = 0; i < n_cpus; i++) running[i] = false;
     }
+  } else if ((rax & 0xffffffff) == 0xabababab) {
+      // saved state and exit
+      std::cout << "Saved state... will now exit." << std::endl;
+      exit(0);
   } else if ( (rax & 0xfffffff0) != 0x00000000 &&
               (rax & 0xfffffff0) != 0x80000000 &&
               (rax & 0xfffffff0) != 0x40000000 ) {
